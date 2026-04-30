@@ -1,0 +1,28 @@
+# importing libraries
+
+import pandas as pd
+import numpy as ny
+import matplotlib.pyplot as plt
+dataset=pd.read_csv("/Users/navya2005/Desktop/ML assignment/Social_Network_Ads.csv")
+dataset
+dataset=pd.get_dummies(dataset,drop_first=True)
+dataset
+dataset["Purchased"].value_counts()
+indep=dataset[["Age","EstimatedSalary","Gender_Male"]]
+dep=dataset[["Purchased"]]
+indep.shape
+dep
+# Spliting into training and test set
+from sklearn.model_selection import train_test_split
+X_train, X_test, Y_train, Y_test= train_test_split(indep,dep,test_size=0.30,random_state=0)
+from sklearn.svm import SVC
+classifier= SVC(kernel='rbf', random_state=0)
+classifier.fit(X_train,Y_train)
+Y_pred=classifier.predict(X_test)
+from sklearn.metrics import confusion_matrix
+cm=confusion_matrix(Y_test,Y_pred)
+print(cm)
+from sklearn.metrics import classification_report
+clf_report=classification_report(Y_test,Y_pred)
+print(clf_report)
+print(cm)
